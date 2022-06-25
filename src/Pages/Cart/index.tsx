@@ -16,7 +16,7 @@ import { Container } from './styles';
 function Cart({ navigation}) {
   const [cart, setCart] = useState([] as ItemList)
   const [total, setTotal] = useState(0)
-
+  const [totalItems, setTotalItems] = useState(0)
 
   const { getItem, setItem } = useAsyncStorage('items');
 
@@ -28,10 +28,10 @@ function Cart({ navigation}) {
   }, [])
 
   const fetchData = async () => {
-    const response: {cart: ItemList, total: number} = await loadCart(getItem)
-    setCart(response.cart)
-    setTotal(response.total)
-
+    const {cart, totalAmount, totalItems}: {cart: ItemList, totalAmount: number, totalItems: number} = await loadCart(getItem)
+    setCart(cart)
+    setTotal(totalAmount)
+    setTotalItems(totalItems)
   }
 
   useEffect(() => {
@@ -46,6 +46,7 @@ function Cart({ navigation}) {
 
   return (
     <Container>
+      <Text style={{fontSize: 20, marginHorizontal: 10, marginTop: 20}}>Produtos selecionados: {totalItems}</Text>
       <FlatList
         style={{
           flex: 1,
