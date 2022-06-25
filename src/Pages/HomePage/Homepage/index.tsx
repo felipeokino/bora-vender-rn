@@ -56,10 +56,10 @@ function Homepage({ navigation }) {
   return (
     <Container>
       <FlatList
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
 
         numColumns={columns}
         data={createRows(loadedData, columns)}

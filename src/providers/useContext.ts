@@ -2,16 +2,20 @@ import React, { createContext, useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { Item, ItemList } from '../Pages/common';
 
-export const CartContext = createContext<{cart: any[]}>({cart: []});
 
 
-export const useCartContext = (Context: React.Context<{cart: ItemList}>) => {
-  const context = useContext(Context);
-  const [cart, setCart] = useState<ItemList>(context.cart);
+export const useCartContext = (Context: React.Context<ItemList>) => {
+  let context = useContext(Context);
+  const [cart, setCart] = useState<ItemList>(context);
 
-  useEffect(() => {
-    context.cart = cart;
-  }, [cart]);
+  const addToContext = async (newArray: ItemList) => {
+    context = newArray
+  }
 
-  return {cart, setCart};
+  const addToCart = async (item: Item) => {
+    setCart([...cart, item]);
+    addToContext([...cart, item]);
+  }
+
+  return {cart, addToCart};
 }

@@ -1,17 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react';
+import React, { createContext } from 'react';
 import Cart from './src/Pages/Cart/Cart';
+import { ItemList } from './src/Pages/common';
 import Homepage from './src/Pages/HomePage/Homepage';
 import ItemDesc from './src/Pages/ItemDesc/ItemDesc';
-import { CartContext } from './src/providers/useContext';
 
 const Stack = createNativeStackNavigator();
+export const CartContext = createContext<any[]>([]);
 
+const cart = [] as ItemList;
 const App: React.FC = () => {
   return (
     <NavigationContainer>
-      <CartContext.Provider value={{cart: []}}>
+      <CartContext.Provider value={[]}>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Homepage} options={
             {

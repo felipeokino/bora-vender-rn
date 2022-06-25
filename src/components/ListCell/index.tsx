@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { CellContainer, CellContainerEmpty, CellFooter ,PriceText, ItemTitle } from './styles';
 import {Item} from '../../Pages/common'
 import { Text, TouchableOpacity, Image } from 'react-native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { currencyFormat } from '../../utils/number';
-import { CartContext, useCartContext } from '../../providers/useContext';
+import { addItem } from '../../utils/manageCart';
 
 interface IListCell {
     item: Item;
@@ -12,11 +13,7 @@ interface IListCell {
 
 const ListCell: React.FC<IListCell> = ({ item, isEmpty }) => {
   const {cost, name, img_url} = item;
-    const {cart, setCart} = useCartContext(CartContext)
-
-    const addToCart = () => {
-      setCart([...cart, item])
-    }
+  const {setItem, getItem} = useAsyncStorage('items');
 
     return (
       <>
@@ -39,7 +36,7 @@ const ListCell: React.FC<IListCell> = ({ item, isEmpty }) => {
             <ItemTitle>{name}</ItemTitle>
             <CellFooter>
 
-              <TouchableOpacity onPress={addToCart}>
+              <TouchableOpacity onPress={async () => await addItem(getItem, setItem, item)}>
                   <Text>Add</Text>
               </TouchableOpacity>
               <PriceText>{currencyFormat(cost)}</PriceText>
