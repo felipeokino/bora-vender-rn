@@ -1,3 +1,6 @@
 export function currencyFormat(value: number): string {
-  return `R$ ${value.toFixed(2)}`;
+  return Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value);
 }

@@ -1,6 +1,6 @@
 import { ItemList } from '../Pages/common';
 
-export const loadCart = async (getter): Promise<ItemList> => {
+export const loadCart = async (getter): Promise<{cart: ItemList, total: number}> => {
   const items = await getter((err, items) => {
     if (err) {
       return {};
@@ -9,9 +9,10 @@ export const loadCart = async (getter): Promise<ItemList> => {
   })
   if (items?.length) {
     const _cart = JSON.parse(items);
-    return Object.values(_cart);
+    const sum = Object.values(_cart).reduce((acc, {item, quantity }) => acc + (+item.cost * +quantity), 0) as number;
+    return { cart: Object.values(_cart), total: sum };
   } else {
-    return [];
+    return {cart: [], total: 0};
   }
 }
 
@@ -30,9 +31,8 @@ export const addItem = async (getter, setter, item: Item) => {
                 quantity: 1,
                 item
             };
-        } else {
+        } else
             items[item.id].quantity++;
-        }
 
         await setter(JSON.stringify(items));
     } else {

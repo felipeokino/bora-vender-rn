@@ -32,7 +32,7 @@ export const RightContainer = styled.View`
 export const RemoveItemButton = styled.TouchableOpacity`
   border-width: 1px;
   border-color: #f00;
-  border-radius: 10;
+  border-radius: 10px;
   background-color: #f97a7a;
   padding: 15px 10px;
 `
