@@ -7,7 +7,7 @@ import ItemDesc from './src/Pages/ItemDesc/ItemDesc';
 
 const Stack = createNativeStackNavigator();
 
-const App: React.FC = () => {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -18,5 +18,3 @@ const App: React.FC = () => {
     </NavigationContainer>
   );
 }
-
-export default App;
